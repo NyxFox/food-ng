@@ -51,7 +51,7 @@ return [
             'banner_text' => '',
             'theme_mode' => 'light',
             'accent_color' => '#0f766e',
-            'github_url' => 'https://github.com/example/food-ng',
+            'github_url' => 'https://github.com/NyxFox/food-ng',
             'app_icon_path' => '',
             'app_icon_mime' => '',
             'app_icon_updated_at' => '',
