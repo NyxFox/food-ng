@@ -1,0 +1,6 @@
+.git
+storage/database.sqlite
+storage/generated
+storage/uploads
+storage/logs
+storage/cache

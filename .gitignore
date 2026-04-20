@@ -1,0 +1,7 @@
+/node_modules/
+/storage/database.sqlite
+/storage/logs/*.log
+/storage/uploads/*
+/storage/generated/*
+/storage/cache/*
+!/storage/.gitignore
