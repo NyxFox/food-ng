@@ -10,6 +10,34 @@ use RuntimeException;
 
 final class SettingsController extends BaseController
 {
+    private const THEME_OPTIONS = [
+        'light' => [
+            'label' => 'Standard',
+            'description' => 'Das bisherige helle Standard-Theme mit ruhiger, neutraler Oberfläche.',
+            'accent' => '#0f766e',
+        ],
+        'dark' => [
+            'label' => 'Nacht',
+            'description' => 'Dunkles Theme mit kühler Oberfläche und kräftigem Kontrast.',
+            'accent' => '#2c9bd2',
+        ],
+        'forest' => [
+            'label' => 'Wald',
+            'description' => 'Natürliche Grün- und Sandtöne für einen warmen, ruhigen Auftritt.',
+            'accent' => '#5b7d2c',
+        ],
+        'sunrise' => [
+            'label' => 'Sonnenaufgang',
+            'description' => 'Helles Theme mit warmen Orange- und Sandnuancen.',
+            'accent' => '#d97706',
+        ],
+        'cjd' => [
+            'label' => 'CJD Exklusiv',
+            'description' => 'Angelehnt an den CJD-Designguide mit CJD Blau, CJD Grün und markanten asymmetrischen Flächen.',
+            'accent' => '#006b99',
+        ],
+    ];
+
     public function index(Request $request, array $params = []): void
     {
         $this->requireAdmin();
@@ -17,6 +45,7 @@ final class SettingsController extends BaseController
         $this->render('admin/settings/index', [
             'pageTitle' => 'Einstellungen',
             'documentStatus' => $this->documentProcessor()->status(),
+            'themeOptions' => self::THEME_OPTIONS,
             'updateStatus' => $this->updater()->status(true),
         ]);
     }
@@ -86,7 +115,7 @@ final class SettingsController extends BaseController
             throw new RuntimeException('Ungültiger Banner-Stil.');
         }
 
-        if (!in_array($values['theme_mode'], ['light', 'dark'], true)) {
+        if (!in_array($values['theme_mode'], array_keys(self::THEME_OPTIONS), true)) {
             throw new RuntimeException('Ungültiger Theme-Modus.');
         }
 

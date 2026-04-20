@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+
+set -eu
+
+if [ "${FOODNG_SKIP_AUTO_VERSION_BUMP:-}" = "1" ]; then
+    exit 0
+fi
+
+repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root"
+
+if [ ! -f package.json ] || [ ! -f package-lock.json ]; then
+    exit 0
+fi
+
+if ! command -v npm >/dev/null 2>&1; then
+    echo "Automatischer Versionssprung abgebrochen: npm wurde nicht gefunden." >&2
+    exit 1
+fi
+
+if ! git diff --quiet -- package.json package-lock.json; then
+    echo "Automatischer Versionssprung abgebrochen: package.json oder package-lock.json enthalten unstaged Aenderungen." >&2
+    echo "Bitte diese Dateien zuerst sauber stagen oder zurueckstellen und den Commit erneut ausfuehren." >&2
+    exit 1
+fi
+
+current_version=$(node -p "require('./package.json').version")
+
+npm version minor --no-git-tag-version >/dev/null
+git add package.json package-lock.json
+
+next_version=$(node -p "require('./package.json').version")
+echo "Minor-Version automatisch erhoeht: ${current_version} -> ${next_version}"

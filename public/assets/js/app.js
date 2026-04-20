@@ -19,6 +19,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  const themeSelect = document.querySelector('[data-theme-select]');
+  const accentInput = document.querySelector('[data-theme-accent-input]');
+  const themeDescription = document.querySelector('[data-theme-description]');
+
+  if (themeSelect) {
+    const getSelectedOption = () => themeSelect.options[themeSelect.selectedIndex] || null;
+    const initialOption = getSelectedOption();
+
+    if (accentInput && initialOption) {
+      accentInput.dataset.lastRecommended = (initialOption.dataset.accent || '').toLowerCase();
+    }
+
+    const syncThemeMeta = () => {
+      const selectedOption = getSelectedOption();
+
+      if (!selectedOption) {
+        return;
+      }
+
+      const recommendedAccent = (selectedOption.dataset.accent || '').toLowerCase();
+      const description = selectedOption.dataset.description || '';
+
+      if (themeDescription) {
+        const accentLabel = recommendedAccent ? recommendedAccent.toUpperCase() : '';
+        themeDescription.textContent = accentLabel
+          ? `${description} Empfohlene Akzentfarbe: ${accentLabel}.`
+          : description;
+      }
+
+      if (accentInput) {
+        const currentValue = accentInput.value.trim().toLowerCase();
+        const lastRecommended = (accentInput.dataset.lastRecommended || '').toLowerCase();
+
+        if (currentValue === '' || currentValue === lastRecommended) {
+          accentInput.value = recommendedAccent;
+        }
+
+        accentInput.dataset.lastRecommended = recommendedAccent;
+      }
+    };
+
+    themeSelect.addEventListener('change', syncThemeMeta);
+    syncThemeMeta();
+  }
+
   const updaterConsole = document.querySelector('[data-updater-console]');
   const updaterStatus = document.querySelector('[data-updater-status]');
   const updaterOutput = document.querySelector('[data-updater-output]');

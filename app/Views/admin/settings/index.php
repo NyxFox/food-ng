@@ -9,6 +9,10 @@
 <section class="grid-2">
     <form class="panel form-grid" method="post" action="<?= e(url('admin/settings')) ?>" enctype="multipart/form-data">
         <?= csrf_field($csrfToken) ?>
+        <?php
+        $activeTheme = $settings['theme_mode'] ?? 'light';
+        $selectedTheme = $themeOptions[$activeTheme] ?? $themeOptions['light'];
+        ?>
         <div class="panel__header">
             <div>
                 <h2>Darstellung und Inhalte</h2>
@@ -27,15 +31,25 @@
 
         <label>
             <span>Theme</span>
-            <select name="theme_mode">
-                <option value="light" <?= ($settings['theme_mode'] ?? 'light') === 'light' ? 'selected' : '' ?>>hell</option>
-                <option value="dark" <?= ($settings['theme_mode'] ?? 'light') === 'dark' ? 'selected' : '' ?>>dunkel</option>
+            <select name="theme_mode" data-theme-select>
+                <?php foreach ($themeOptions as $value => $theme): ?>
+                    <option
+                        value="<?= e($value) ?>"
+                        data-accent="<?= e($theme['accent']) ?>"
+                        data-description="<?= e($theme['description']) ?>"
+                        <?= $activeTheme === $value ? 'selected' : '' ?>
+                    >
+                        <?= e($theme['label']) ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
+            <small class="field-hint" data-theme-description><?= e($selectedTheme['description']) ?> Empfohlene Akzentfarbe: <?= e(strtoupper($selectedTheme['accent'])) ?>.</small>
         </label>
 
         <label>
             <span>Akzentfarbe</span>
-            <input type="text" name="accent_color" required pattern="^#[0-9a-fA-F]{6}$" value="<?= e($settings['accent_color'] ?? '#0f766e') ?>">
+            <input type="text" name="accent_color" data-theme-accent-input required pattern="^#[0-9a-fA-F]{6}$" value="<?= e($settings['accent_color'] ?? '#0f766e') ?>">
+            <small class="field-hint">Beim Wechsel des Themes wird eine passende Akzentfarbe vorgeschlagen. Eigene Hex-Werte bleiben möglich.</small>
         </label>
 
         <label class="checkbox-field">

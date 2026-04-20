@@ -82,7 +82,7 @@ Hier liegen die Startwerte für:
 
 - Seitentitel und Untertitel
 - Banner-Anzeige, Stil und Text
-- Theme-Modus und Akzentfarbe
+- Theme-Preset und Akzentfarbe
 - GitHub-URL
 - Branding-Dateien
 - Impressum

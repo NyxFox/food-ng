@@ -31,7 +31,7 @@ Food NG ist ein kleines, produktionsnahes CMS für Speisepläne. Die Anwendung b
 - serverseitige Vorschau- und Aktivierungsstrecke
 - Benutzerverwaltung mit Rollen `admin` und `editor`
 - pflegbarer Hinweisbanner
-- helles und dunkles Theme plus Akzentfarbe
+- mehrere Theme-Presets inklusive CJD-Theme plus Akzentfarbe
 - austauschbares App-Icon oder Kundenlogo
 - Semantic Versioning über [`package.json`](../package.json)
 
