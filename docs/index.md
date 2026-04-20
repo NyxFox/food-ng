@@ -20,7 +20,7 @@ Food NG ist ein kleines, produktionsnahes CMS für Speisepläne. Die Anwendung b
 - [Betrieb und Workflows](./operations.md)
   Falls du den Upload-Prozess, PDF-Verarbeitung, Branding, Logging oder Updates suchst.
 - [Deployment](./deployment.md)
-  Falls du Apache, Nginx, IIS oder einfachen Webspace vorbereitest.
+  Falls du Apache, Nginx, IIS oder Shared Hosting bei STRATO, IONOS und netcup vorbereitest.
 
 ## Funktionen
 
