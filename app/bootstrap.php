@@ -15,6 +15,7 @@ use App\Services\LoggerService;
 use App\Services\MealPlanService;
 use App\Services\Migrator;
 use App\Services\SettingsService;
+use App\Services\StatsService;
 use App\Services\UpdateService;
 use App\Services\UserService;
 use App\Services\VersionService;
@@ -109,6 +110,7 @@ $documentProcessor = new DocumentProcessor($config, $commandRunner);
 $mealPlans = new MealPlanService($database, $logger, $documentProcessor, $config);
 $users = new UserService($database, $logger);
 $updater = new UpdateService($config, $commandRunner, $logger, $versionService);
+$stats = new StatsService($database);
 
 return [
     'config' => $config,
@@ -124,6 +126,7 @@ return [
     'mealPlans' => $mealPlans,
     'users' => $users,
     'updater' => $updater,
+    'stats' => $stats,
     'version' => $versionService,
     'db' => $database,
 ];

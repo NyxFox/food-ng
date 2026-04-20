@@ -93,6 +93,71 @@
 <section class="panel">
     <div class="panel__header">
         <div>
+            <h2>Seitenaufrufe</h2>
+            <p class="muted">Sessionbasierte Statistiken – keine IP-Speicherung.</p>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <article class="stat-card">
+            <span>Heute</span>
+            <strong><?= e((string) $statsSummary['views_today']) ?></strong>
+            <small>Aufrufe</small>
+        </article>
+        <article class="stat-card">
+            <span>Heute</span>
+            <strong><?= e((string) $statsSummary['unique_sessions_today']) ?></strong>
+            <small>einmalige Sitzungen</small>
+        </article>
+        <article class="stat-card">
+            <span>7 Tage</span>
+            <strong><?= e((string) $statsSummary['views_7days']) ?></strong>
+            <small>Aufrufe</small>
+        </article>
+        <article class="stat-card">
+            <span>7 Tage</span>
+            <strong><?= e((string) $statsSummary['unique_sessions_7days']) ?></strong>
+            <small>einmalige Sitzungen</small>
+        </article>
+        <article class="stat-card">
+            <span>Gesamt</span>
+            <strong><?= e((string) $statsSummary['views_total']) ?></strong>
+            <small>Aufrufe</small>
+        </article>
+        <article class="stat-card">
+            <span>Gesamt</span>
+            <strong><?= e((string) $statsSummary['unique_sessions_total']) ?></strong>
+            <small>einmalige Sitzungen</small>
+        </article>
+    </div>
+
+    <?php if (!empty($statsSummary['daily'])): ?>
+        <div class="table-scroll" style="margin-top: 1rem;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Tag</th>
+                        <th>Aufrufe</th>
+                        <th>Einmalige Sitzungen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach (array_reverse($statsSummary['daily']) as $day): ?>
+                        <tr>
+                            <td><?= e($day['day']) ?></td>
+                            <td><?= e((string) $day['views']) ?></td>
+                            <td><?= e((string) $day['unique_sessions']) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php endif; ?>
+</section>
+
+<section class="panel">
+    <div class="panel__header">
+        <div>
             <h2>Letzte Ereignisse</h2>
             <p class="muted">Kompakter Blick in das Aktionslog.</p>
         </div>

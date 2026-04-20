@@ -12,6 +12,8 @@ final class HomeController extends BaseController
 {
     public function index(Request $request, array $params = []): void
     {
+        $this->stats()->record(session_id(), '/');
+
         $activePlan = $this->mealPlans()->active();
 
         $this->render('home', [
@@ -64,6 +66,8 @@ final class HomeController extends BaseController
         if ((int) $plan['is_active'] !== 1 && !$this->auth()->check()) {
             throw new HttpException(404, 'Der angeforderte Speiseplan wurde nicht gefunden.');
         }
+
+        $this->stats()->record(session_id(), '/meal-plans/' . $plan['id'] . '/pdf');
 
         $this->streamPdfFile(
             $this->mealPlans()->absoluteStoragePath((string) $plan['merged_pdf_path']),

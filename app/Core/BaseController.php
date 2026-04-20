@@ -13,6 +13,7 @@ use App\Services\FlashService;
 use App\Services\LoggerService;
 use App\Services\MealPlanService;
 use App\Services\SettingsService;
+use App\Services\StatsService;
 use App\Services\UpdateService;
 use App\Services\UserService;
 
@@ -137,6 +138,11 @@ abstract class BaseController
     protected function updater(): UpdateService
     {
         return $this->container['updater'];
+    }
+
+    protected function stats(): StatsService
+    {
+        return $this->container['stats'];
     }
 
     protected function db(): Database

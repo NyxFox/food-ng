@@ -57,3 +57,14 @@ CREATE TABLE IF NOT EXISTS logs (
 
 CREATE INDEX IF NOT EXISTS idx_logs_created_at ON logs (created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_logs_action ON logs (action);
+
+CREATE TABLE IF NOT EXISTS page_views (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    session_id TEXT NOT NULL,
+    path TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_page_views_session_id ON page_views (session_id);
+CREATE INDEX IF NOT EXISTS idx_page_views_created_at ON page_views (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_page_views_path ON page_views (path);

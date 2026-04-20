@@ -20,6 +20,7 @@ final class AdminController extends BaseController
             'documentStatus' => $this->documentProcessor()->status(),
             'updateStatus' => $this->updater()->status(),
             'recentLogs' => $this->logger()->latest([], 8),
+            'statsSummary' => $this->stats()->summary(),
         ]);
     }
 }
