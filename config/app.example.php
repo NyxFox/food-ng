@@ -6,7 +6,7 @@ $root = dirname(__DIR__);
 
 return [
     'app' => [
-        'name' => 'Food NG',
+        'name' => 'Food-NG',
         'base_path' => '',
         'timezone' => 'Europe/Berlin',
         'debug' => false,
@@ -45,7 +45,7 @@ return [
     'defaults' => [
         'settings' => [
             'site_title' => 'Food-NG',
-            'site_subtitle' => 'CJD Dortmund',
+            'site_subtitle' => 'CMS für Speisepläne',
             'banner_enabled' => '0',
             'banner_style' => 'info',
             'banner_text' => '',
