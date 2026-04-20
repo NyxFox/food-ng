@@ -17,7 +17,7 @@ final class CommandRunner
         return function_exists('proc_open');
     }
 
-    public function run(array $command, ?string $cwd = null): array
+    public function run(array $command, ?string $cwd = null, ?array $env = null): array
     {
         if (!$this->canRunCommands()) {
             throw new RuntimeException('Der Server erlaubt keine externen Prozessaufrufe (proc_open deaktiviert).');
@@ -29,7 +29,7 @@ final class CommandRunner
             2 => ['pipe', 'w'],
         ];
 
-        $process = proc_open($shellCommand, $descriptors, $pipes, $cwd);
+        $process = proc_open($shellCommand, $descriptors, $pipes, $cwd, $this->buildEnvironment($env));
 
         if (!is_resource($process)) {
             throw new RuntimeException('Externer Prozess konnte nicht gestartet werden.');
@@ -52,7 +52,7 @@ final class CommandRunner
         ];
     }
 
-    public function runStreaming(array $command, callable $onChunk, ?string $cwd = null): array
+    public function runStreaming(array $command, callable $onChunk, ?string $cwd = null, ?array $env = null): array
     {
         if (!$this->canRunCommands()) {
             throw new RuntimeException('Der Server erlaubt keine externen Prozessaufrufe (proc_open deaktiviert).');
@@ -64,7 +64,7 @@ final class CommandRunner
             2 => ['pipe', 'w'],
         ];
 
-        $process = proc_open($shellCommand, $descriptors, $pipes, $cwd);
+        $process = proc_open($shellCommand, $descriptors, $pipes, $cwd, $this->buildEnvironment($env));
 
         if (!is_resource($process)) {
             throw new RuntimeException('Externer Prozess konnte nicht gestartet werden.');
@@ -159,5 +159,16 @@ final class CommandRunner
         }
 
         return null;
+    }
+
+    private function buildEnvironment(?array $env = null): ?array
+    {
+        if ($env === null || $env === []) {
+            return null;
+        }
+
+        $base = getenv();
+
+        return array_merge(is_array($base) ? $base : [], $env);
     }
 }

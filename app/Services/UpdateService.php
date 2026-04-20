@@ -67,7 +67,7 @@ final class UpdateService
             return $status;
         }
 
-        $probe = $this->commands->run([$gitBinary, '-C', $repoPath, 'rev-parse', '--is-inside-work-tree']);
+        $probe = $this->commands->run([$gitBinary, '-C', $repoPath, 'rev-parse', '--is-inside-work-tree'], null, $this->gitEnvironment());
 
         if (!$probe['success'] || trim($probe['stdout']) !== 'true') {
             $status['message'] = 'Das konfigurierte Verzeichnis ist kein Git-Repository.';
@@ -78,17 +78,17 @@ final class UpdateService
         $status['is_repo'] = true;
         $status['can_open_runner'] = true;
 
-        $branchProbe = $this->commands->run([$gitBinary, '-C', $repoPath, 'rev-parse', '--abbrev-ref', 'HEAD']);
+        $branchProbe = $this->commands->run([$gitBinary, '-C', $repoPath, 'rev-parse', '--abbrev-ref', 'HEAD'], null, $this->gitEnvironment());
         if ($branchProbe['success']) {
             $status['current_branch'] = trim($branchProbe['stdout']);
         }
 
-        $localCommitProbe = $this->commands->run([$gitBinary, '-C', $repoPath, 'rev-parse', 'HEAD']);
+        $localCommitProbe = $this->commands->run([$gitBinary, '-C', $repoPath, 'rev-parse', 'HEAD'], null, $this->gitEnvironment());
         if ($localCommitProbe['success']) {
             $status['local_commit'] = trim($localCommitProbe['stdout']);
         }
 
-        $cleanProbe = $this->commands->run([$gitBinary, '-C', $repoPath, 'status', '--short']);
+        $cleanProbe = $this->commands->run([$gitBinary, '-C', $repoPath, 'status', '--short'], null, $this->gitEnvironment());
         if ($cleanProbe['success']) {
             $status['worktree_clean'] = trim($cleanProbe['stdout']) === '';
         }
@@ -108,7 +108,7 @@ final class UpdateService
             return $status;
         }
 
-        $fetch = $this->commands->run([$gitBinary, '-C', $repoPath, 'fetch', '--all', '--prune']);
+        $fetch = $this->commands->run([$gitBinary, '-C', $repoPath, 'fetch', '--all', '--prune'], null, $this->gitEnvironment());
         if (!$fetch['success']) {
             $message = trim($fetch['stdout'] . "\n" . $fetch['stderr']);
             $status['message'] = 'Remote-Status konnte nicht geprüft werden.' . ($message !== '' ? ' ' . $message : '');
@@ -118,7 +118,7 @@ final class UpdateService
 
         $status['remote_checked'] = true;
 
-        $remoteCommitProbe = $this->commands->run([$gitBinary, '-C', $repoPath, 'rev-parse', 'origin/' . $branch]);
+        $remoteCommitProbe = $this->commands->run([$gitBinary, '-C', $repoPath, 'rev-parse', 'origin/' . $branch], null, $this->gitEnvironment());
         if (!$remoteCommitProbe['success']) {
             $message = trim($remoteCommitProbe['stdout'] . "\n" . $remoteCommitProbe['stderr']);
             $status['message'] = 'Remote-Branch origin/' . $branch . ' konnte nicht gelesen werden.' . ($message !== '' ? ' ' . $message : '');
@@ -128,7 +128,7 @@ final class UpdateService
 
         $status['remote_commit'] = trim($remoteCommitProbe['stdout']);
 
-        $compareProbe = $this->commands->run([$gitBinary, '-C', $repoPath, 'rev-list', '--left-right', '--count', 'HEAD...origin/' . $branch]);
+        $compareProbe = $this->commands->run([$gitBinary, '-C', $repoPath, 'rev-list', '--left-right', '--count', 'HEAD...origin/' . $branch], null, $this->gitEnvironment());
         if (!$compareProbe['success']) {
             $message = trim($compareProbe['stdout'] . "\n" . $compareProbe['stderr']);
             $status['message'] = 'Update-Abstand zu origin/' . $branch . ' konnte nicht bestimmt werden.' . ($message !== '' ? ' ' . $message : '');
@@ -141,7 +141,7 @@ final class UpdateService
         $status['commits_behind'] = (int) $behind;
         $status['update_available'] = $status['commits_behind'] > 0;
 
-        $remoteVersionProbe = $this->commands->run([$gitBinary, '-C', $repoPath, 'show', 'origin/' . $branch . ':package.json']);
+        $remoteVersionProbe = $this->commands->run([$gitBinary, '-C', $repoPath, 'show', 'origin/' . $branch . ':package.json'], null, $this->gitEnvironment());
         if ($remoteVersionProbe['success']) {
             $status['remote_version'] = $this->versions->fromPackageJsonContents($remoteVersionProbe['stdout']);
         }
@@ -229,7 +229,9 @@ final class UpdateService
                         'stream' => $stream,
                         'text' => $chunk,
                     ]);
-                }
+                },
+                null,
+                $this->gitEnvironment()
             );
 
             if (!$fetch['success']) {
@@ -255,7 +257,9 @@ final class UpdateService
                         'stream' => $stream,
                         'text' => $chunk,
                     ]);
-                }
+                },
+                null,
+                $this->gitEnvironment()
             );
 
             $output = trim($pull['stdout'] . "\n" . $pull['stderr']);
@@ -361,5 +365,13 @@ final class UpdateService
     private function lockPath(): string
     {
         return rtrim((string) ($this->config['paths']['storage'] ?? ''), '/') . '/cache/' . self::LOCK_FILENAME;
+    }
+
+    private function gitEnvironment(): array
+    {
+        return [
+            'GIT_TERMINAL_PROMPT' => '0',
+            'GCM_INTERACTIVE' => 'Never',
+        ];
     }
 }
