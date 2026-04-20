@@ -26,8 +26,8 @@ fi
 
 current_version=$(node -p "require('./package.json').version")
 
-npm version minor --no-git-tag-version >/dev/null
+npm version patch --no-git-tag-version >/dev/null
 git add package.json package-lock.json
 
 next_version=$(node -p "require('./package.json').version")
-echo "Minor-Version automatisch erhoeht: ${current_version} -> ${next_version}"
+echo "Patch-Version automatisch erhoeht: ${current_version} -> ${next_version}"

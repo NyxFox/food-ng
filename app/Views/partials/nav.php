@@ -24,8 +24,6 @@
         <nav class="site-nav" id="main-navigation" data-nav>
             <?php $homeActive = rtrim($currentPath, '/') === rtrim(url(''), '/') || $currentPath === url(''); ?>
             <a class="<?= $homeActive ? 'is-active' : '' ?>" href="<?= e(url('')) ?>">Startseite</a>
-            <a class="<?= current_path_starts_with($currentPath, 'impressum') ? 'is-active' : '' ?>" href="<?= e(url('impressum')) ?>">Impressum</a>
-            <a class="<?= current_path_starts_with($currentPath, 'datenschutz') ? 'is-active' : '' ?>" href="<?= e(url('datenschutz')) ?>">Datenschutz</a>
 
             <?php if ($currentUser !== null): ?>
                 <span class="site-nav__divider"></span>

@@ -85,7 +85,9 @@ Hilfsskripte:
 
 Die Befehle aktualisieren `package.json` und `package-lock.json`, ohne automatisch einen Git-Tag zu erzeugen.
 
-Fuer dieses Repository ist ausserdem ein versionierter `pre-commit`-Hook unter [`.githooks/pre-commit`](../.githooks/pre-commit) vorgesehen. Nach `npm run hooks:install` setzt Git lokal `core.hooksPath` auf `.githooks`; danach erhoeht jeder normale `git commit` die Minor-Version automatisch und staged `package.json` sowie `package-lock.json` mit in denselben Commit.
+Fuer dieses Repository ist ausserdem ein versionierter `pre-commit`-Hook unter [`.githooks/pre-commit`](../.githooks/pre-commit) vorgesehen. Nach `npm run hooks:install` setzt Git lokal `core.hooksPath` auf `.githooks`; danach erhoeht jeder normale `git commit` automatisch die Patch-Version, also die dritte Ziffer, und staged `package.json` sowie `package-lock.json` mit in denselben Commit.
+
+Minor- und Major-Spruenge bleiben manuell ueber `npm run version:minor` und `npm run version:major`.
 
 Falls der automatische Sprung in einer Ausnahme bewusst uebersprungen werden soll, geht das mit `git commit --no-verify` oder temporaer mit `FOODNG_SKIP_AUTO_VERSION_BUMP=1 git commit`.
 
