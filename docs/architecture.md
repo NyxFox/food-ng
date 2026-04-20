@@ -69,7 +69,7 @@ food-ng/
 │   └── routes.php
 ├── config/
 │   ├── app.example.php
-│   └── app.php
+│   └── app.php (optional, lokal)
 ├── database/
 │   └── schema.sql
 ├── docker/

@@ -6,11 +6,9 @@ Die ausführliche Projektdokumentation liegt nicht mehr in dieser Datei, sondern
 
 ## Schnellstart
 
-1. Konfiguration anlegen:
+1. Konfiguration pruefen:
 
-```bash
-cp config/app.example.php config/app.php
-```
+`config/app.example.php` ist direkt als Basis nutzbar. Nur wenn du lokale Overrides brauchst, legst du optional `config/app.php` an.
 
 2. Storage-Verzeichnisse vorbereiten:
 
@@ -63,6 +61,6 @@ docker compose up --build
 
 - Einstiegspunkt: [`public/index.php`](./public/index.php)
 - Routen: [`app/routes.php`](./app/routes.php)
-- Beispielkonfiguration: [`config/app.example.php`](./config/app.example.php)
+- Basis-Konfiguration: [`config/app.example.php`](./config/app.example.php)
 - Datenbankschema: [`database/schema.sql`](./database/schema.sql)
 - Anforderungen prüfen: [`scripts/check_requirements.php`](./scripts/check_requirements.php)

@@ -64,7 +64,7 @@ Wenn nur ein Unterordner möglich ist:
 
 1. Anwendung hochladen.
 2. Webroot auf `public/` legen oder dessen Inhalt dort bereitstellen.
-3. `app.base_path` in [`config/app.php`](../config/app.php) setzen, wenn die App unter einem Unterpfad erreichbar ist.
+3. `app.base_path` in einer lokalen `config/app.php` setzen, wenn die App unter einem Unterpfad erreichbar ist.
 
 ## Shared Hosting bei STRATO, IONOS und netcup
 
@@ -108,12 +108,12 @@ Das ist die bevorzugte Variante und funktioniert auf netcup direkt über den kon
 Vorgehen:
 
 1. Projekt vollständig hochladen, zum Beispiel nach `food-ng/`.
-2. [`config/app.example.php`](../config/app.example.php) nach `config/app.php` kopieren.
+2. Optional eine lokale `config/app.php` mit installationsspezifischen Overrides anlegen.
 3. `storage/uploads`, `storage/generated`, `storage/logs` und `storage/cache` anlegen.
 4. Domain, Subdomain oder Zielverzeichnis auf `food-ng/public/` setzen.
 5. `app.base_path` leer lassen, solange die App unter der Domain direkt im URL-Root läuft.
-6. Falls der Tarif kein `git` oder `proc_open` erlaubt, `features.update_runner` in [`config/app.php`](../config/app.php) auf `false` setzen.
-7. Falls `qpdf` oder `soffice` nicht im `PATH` liegen, feste Pfade in [`config/app.php`](../config/app.php) hinterlegen.
+6. Falls der Tarif kein `git` oder `proc_open` erlaubt, `features.update_runner` in der lokalen `config/app.php` auf `false` setzen.
+7. Falls `qpdf` oder `soffice` nicht im `PATH` liegen, feste Pfade in `config/app.php` oder Umgebungsvariablen hinterlegen.
 
 Wenn die App stattdessen unter einer URL wie `https://example.tld/food-ng/` erreichbar ist, muss `app.base_path` auf `/food-ng` gesetzt werden.
 

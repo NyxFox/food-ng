@@ -27,13 +27,13 @@ return [
         'update_runner' => true,
     ],
     'commands' => [
-        'qpdf' => null,
-        'soffice' => null,
-        'git' => null,
+        'qpdf' => getenv('FOODNG_QPDF') ?: null,
+        'soffice' => getenv('FOODNG_SOFFICE') ?: null,
+        'git' => getenv('FOODNG_GIT') ?: null,
     ],
     'updates' => [
         'repo_path' => $root,
-        'branch' => 'main',
+        'branch' => getenv('FOODNG_UPDATE_BRANCH') ?: 'main',
     ],
     'setup' => [
         'auto_create_default_admin' => true,

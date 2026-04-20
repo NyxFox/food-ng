@@ -14,7 +14,7 @@ Food NG ist ein kleines, produktionsnahes CMS für Speisepläne. Die Anwendung b
 - [Installation und lokaler Betrieb](./installation.md)
   Falls du die Anwendung aufsetzen, lokal starten oder auf einer frischen Maschine vorbereiten willst.
 - [Konfiguration](./configuration.md)
-  Falls du `config/app.php`, Upload-Limits, Tool-Pfade oder den Initial-Admin anpassen willst.
+  Falls du Basiswerte, lokale `config/app.php`-Overrides, Upload-Limits, Tool-Pfade oder den Initial-Admin anpassen willst.
 - [Architektur](./architecture.md)
   Falls du verstehen willst, wie Requests, Services, Views und Storage zusammenspielen.
 - [Betrieb und Workflows](./operations.md)

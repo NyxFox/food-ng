@@ -4,10 +4,25 @@ Zurück zum [Dokumentationsindex](./index.md).
 
 ## Dateien
 
-- aktive Konfiguration: [`config/app.php`](../config/app.php)
-- Vorlage: [`config/app.example.php`](../config/app.example.php)
+- Basis-Konfiguration: [`config/app.example.php`](../config/app.example.php)
+- optionales lokales Override: `config/app.php` (gitignored)
 
-Die Anwendung liest ihre zentrale Konfiguration aus `config/app.php`. Die Vorlage in `config/app.example.php` ist der Startpunkt für neue Installationen.
+Die Anwendung lädt zuerst `config/app.example.php` und merged danach optional eine lokale `config/app.php` darüber. So bleibt im Repository nur die Example-Datei versioniert, während installationsspezifische Abweichungen lokal bleiben.
+
+Eine lokale `config/app.php` darf die komplette Struktur enthalten, meistens reicht aber ein partielles Override:
+
+```php
+<?php
+
+return [
+    'app' => [
+        'base_path' => '/food-ng',
+    ],
+    'features' => [
+        'update_runner' => false,
+    ],
+];
+```
 
 ## Bereich `app`
 
@@ -58,12 +73,20 @@ Die Anwendung liest ihre zentrale Konfiguration aus `config/app.php`. Die Vorlag
 
 Wenn diese Werte `null` bleiben, versucht die Anwendung die Tools über den `PATH` zu finden.
 
+Alternativ koennen die Tool-Pfade direkt ueber Umgebungsvariablen gesetzt werden:
+
+- `FOODNG_QPDF`
+- `FOODNG_SOFFICE`
+- `FOODNG_GIT`
+
 ## Bereich `updates`
 
 - `updates.repo_path`
   Repository-Pfad, in dem Updates ausgeführt werden
 - `updates.branch`
   Ziel-Branch für `git pull --ff-only`
+
+Der Branch kann alternativ auch ueber `FOODNG_UPDATE_BRANCH` gesetzt werden.
 
 ## Bereich `setup`
 
@@ -92,7 +115,7 @@ Hier liegen die Startwerte für:
 
 ### Betrieb unter Unterpfad
 
-Wenn die Anwendung nicht direkt unter dem Domain-Root läuft, `app.base_path` setzen.
+Wenn die Anwendung nicht direkt unter dem Domain-Root läuft, `app.base_path` in einer lokalen `config/app.php` setzen.
 
 Beispiel:
 

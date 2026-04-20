@@ -27,10 +27,9 @@ Zurück zum [Dokumentationsindex](./index.md).
 ## Basisinstallation
 
 1. Repository auschecken.
-2. [`config/app.example.php`](../config/app.example.php) nach `config/app.php` kopieren.
-3. Storage-Verzeichnisse anlegen und Schreibrechte setzen.
-4. Optional Pfade für `git`, `qpdf` und `soffice` in [`config/app.php`](../config/app.php) anpassen.
-5. Anforderungen prüfen:
+2. Storage-Verzeichnisse anlegen und Schreibrechte setzen.
+3. Optional eine lokale `config/app.php` mit abweichenden Werten anlegen.
+4. Anforderungen prüfen:
 
 ```bash
 php scripts/check_requirements.php
@@ -67,7 +66,6 @@ sudo apt install -y php php-cli php-fpm php-sqlite3 php-mbstring git qpdf libreo
 Projekt vorbereiten:
 
 ```bash
-cp config/app.example.php config/app.php
 mkdir -p storage/uploads storage/generated storage/logs storage/cache
 chmod -R 775 storage
 php scripts/check_requirements.php
@@ -95,10 +93,10 @@ Empfohlene Basis:
 Projekt vorbereiten:
 
 1. Repository entpacken oder klonen.
-2. `config/app.example.php` zu `config/app.php` kopieren.
+2. Optional eine lokale `config/app.php` fuer abweichende Werte anlegen.
 3. Dem IIS-AppPool Schreibrechte auf `storage\` geben.
 4. Site-Root auf [`public/`](../public/) setzen.
-5. Falls Tools nicht global im `PATH` liegen, Windows-Pfade in [`config/app.php`](../config/app.php) eintragen.
+5. Falls Tools nicht global im `PATH` liegen, Windows-Pfade in `config/app.php` oder Umgebungsvariablen eintragen.
 
 ### Windows mit Apache / XAMPP
 
@@ -113,7 +111,7 @@ Pragmatischer Ablauf:
 
 1. Projekt nach `C:\xampp\htdocs\food-ng` oder an einen anderen Pfad legen.
 2. Virtuellen Host oder DocumentRoot auf `...\food-ng\public` setzen.
-3. [`config/app.php`](../config/app.php) anpassen.
+3. Optional lokale `config/app.php` anlegen und anpassen.
 4. `php scripts/check_requirements.php` in einer Konsole ausführen.
 
 ### Docker
@@ -174,7 +172,7 @@ Danach öffnen:
 
 Beim ersten Start wird automatisch ein Administrator angelegt, falls die Tabelle `users` leer ist.
 
-Standardwerte aus [`config/app.php`](../config/app.php):
+Standardwerte aus [`config/app.example.php`](../config/app.example.php):
 
 - Benutzername `admin`
 - Anzeigename `Administrator`
@@ -184,7 +182,7 @@ Standardwerte aus [`config/app.php`](../config/app.php):
 Vor produktivem Betrieb:
 
 1. Passwort nach dem ersten Login sofort ändern.
-2. Default-Werte in [`config/app.php`](../config/app.php) anpassen.
+2. Default-Werte bei Bedarf per lokaler `config/app.php` überschreiben.
 3. `setup.auto_create_default_admin` deaktivieren, falls kein Auto-Admin gewünscht ist.
 
 ## Schnelltest nach der Installation

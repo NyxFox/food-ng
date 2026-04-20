@@ -19,7 +19,24 @@ use App\Services\UpdateService;
 use App\Services\UserService;
 use App\Services\VersionService;
 
-$config = require __DIR__ . '/../config/app.php';
+$configExamplePath = __DIR__ . '/../config/app.example.php';
+$configOverridePath = __DIR__ . '/../config/app.php';
+
+$config = require $configExamplePath;
+
+if (!is_array($config)) {
+    throw new RuntimeException('Die Basis-Konfiguration in config/app.example.php muss ein Array zurueckgeben.');
+}
+
+if (is_file($configOverridePath)) {
+    $configOverride = require $configOverridePath;
+
+    if (!is_array($configOverride)) {
+        throw new RuntimeException('Die lokale Konfiguration in config/app.php muss ein Array zurueckgeben.');
+    }
+
+    $config = array_replace_recursive($config, $configOverride);
+}
 
 date_default_timezone_set((string) ($config['app']['timezone'] ?? 'UTC'));
 error_reporting(E_ALL);
