@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const streamUrl = updaterConsole.getAttribute('data-stream-url') || '';
     const csrfField = updaterConsole.getAttribute('data-csrf-field') || '_csrf';
     const csrfToken = updaterConsole.getAttribute('data-csrf-token') || '';
-    const autoStart = updaterConsole.getAttribute('data-auto-start') === 'true';
+
 
     const appendOutput = (text) => {
       updaterOutput.textContent += text;
@@ -169,11 +169,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     updaterButton.addEventListener('click', () => {
+      if (!confirm('Update wirklich jetzt starten? Die Anwendung wird dabei kurz neu gestartet.')) {
+        return;
+      }
       runUpdater();
     });
-
-    if (autoStart) {
-      runUpdater();
-    }
   }
 });

@@ -75,10 +75,9 @@
             data-stream-url="<?= e(url('admin/update/stream')) ?>"
             data-csrf-field="<?= e(app_config('security.csrf_field', '_csrf')) ?>"
             data-csrf-token="<?= e($csrfToken) ?>"
-            data-auto-start="<?= $updateStatus['can_run'] ? 'true' : 'false' ?>"
         >
-            <div class="callout" data-updater-status><?= e($updateStatus['can_run'] ? 'Update wird beim Laden dieser Seite gestartet.' : $updateStatus['message']) ?></div>
-            <pre class="terminal-output" data-updater-output><?php if (!$updateStatus['can_run']): ?><?= e('Noch kein Update-Lauf gestartet.') ?><?php endif; ?></pre>
+            <div class="callout" data-updater-status><?= e($updateStatus['message']) ?></div>
+            <pre class="terminal-output" data-updater-output><?= e('Noch kein Update-Lauf gestartet.') ?></pre>
         </div>
     </article>
 </section>
