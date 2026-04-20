@@ -17,7 +17,7 @@ final class SettingsController extends BaseController
         $this->render('admin/settings/index', [
             'pageTitle' => 'Einstellungen',
             'documentStatus' => $this->documentProcessor()->status(),
-            'updateStatus' => $this->updater()->status(),
+            'updateStatus' => $this->updater()->status(true),
         ]);
     }
 

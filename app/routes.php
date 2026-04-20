@@ -59,6 +59,6 @@ $router->post('/admin/settings', [$settings, 'update']);
 $router->get('/admin/logs', [$logs, 'index']);
 
 $router->get('/admin/update', [$updates, 'index']);
-$router->post('/admin/update', [$updates, 'run']);
+$router->post('/admin/update/stream', [$updates, 'stream']);
 
 return $router;

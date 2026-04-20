@@ -132,7 +132,20 @@
                     <h2>Update-Status</h2>
                 </div>
             </div>
+            <?php
+            $updateButtonLabel = $updateStatus['can_run']
+                ? 'Updater öffnen'
+                : ($updateStatus['update_in_progress']
+                    ? 'Update läuft bereits'
+                    : ($updateStatus['remote_checked'] && !$updateStatus['update_available']
+                        ? 'Kein Update verfügbar'
+                        : 'Update derzeit nicht startbar'));
+            ?>
             <dl class="key-value">
+                <div>
+                    <dt>Installierte Version</dt>
+                    <dd>v<?= e($updateStatus['current_version']) ?></dd>
+                </div>
                 <div>
                     <dt>Aktiv</dt>
                     <dd><?= $updateStatus['enabled'] ? 'Ja' : 'Nein' ?></dd>
@@ -146,10 +159,26 @@
                     <dd><?= e($updateStatus['branch']) ?></dd>
                 </div>
                 <div>
+                    <dt>Remote-Version</dt>
+                    <dd><?= e($updateStatus['remote_version'] !== null ? 'v' . $updateStatus['remote_version'] : '—') ?></dd>
+                </div>
+                <div>
+                    <dt>Commits hinter Remote</dt>
+                    <dd><?= e($updateStatus['commits_behind'] === null ? '—' : (string) $updateStatus['commits_behind']) ?></dd>
+                </div>
+                <div>
+                    <dt>Update verfügbar</dt>
+                    <dd><?= $updateStatus['update_available'] ? 'Ja' : 'Nein' ?></dd>
+                </div>
+                <div>
                     <dt>Status</dt>
                     <dd><?= e($updateStatus['message']) ?></dd>
                 </div>
             </dl>
+
+            <div class="button-row">
+                <a class="button <?= !$updateStatus['can_run'] ? 'button--disabled' : '' ?>" href="<?= e(url('admin/update')) ?>" <?= !$updateStatus['can_run'] ? 'aria-disabled="true"' : '' ?>><?= e($updateButtonLabel) ?></a>
+            </div>
         </article>
     </div>
 </section>

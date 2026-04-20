@@ -289,6 +289,14 @@ textarea {
     border: 1px solid var(--border);
 }
 
+.button--disabled,
+.button--disabled:visited {
+    background: color-mix(in srgb, var(--surface-soft) 92%, transparent);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    pointer-events: none;
+}
+
 .button--danger {
     background: var(--danger);
     color: #fff;
@@ -535,6 +543,27 @@ textarea {
     background: var(--surface-soft);
     padding: 0.8rem;
     border-radius: var(--radius-sm);
+}
+
+.updater-console {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.terminal-output {
+    min-height: 22rem;
+    max-height: 32rem;
+    overflow: auto;
+    margin: 0;
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+    background: #0f1715;
+    color: #d9efe8;
+    font-family: "Cascadia Mono", "Consolas", "SFMono-Regular", monospace;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
 .site-footer {

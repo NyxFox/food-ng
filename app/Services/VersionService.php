@@ -17,6 +17,23 @@ final class VersionService
         return $this->readFromPackageJson($this->packageFile()) ?? self::FALLBACK_VERSION;
     }
 
+    public function fromPackageJsonContents(string $contents): ?string
+    {
+        if (trim($contents) === '') {
+            return null;
+        }
+
+        $decoded = json_decode($contents, true);
+
+        if (!is_array($decoded) || !is_string($decoded['version'] ?? null)) {
+            return null;
+        }
+
+        $version = trim($decoded['version']);
+
+        return $this->isSemanticVersion($version) ? $version : null;
+    }
+
     public function packageFile(): string
     {
         return rtrim($this->rootPath, '/') . '/package.json';
@@ -34,15 +51,7 @@ final class VersionService
             return null;
         }
 
-        $decoded = json_decode($contents, true);
-
-        if (!is_array($decoded) || !is_string($decoded['version'] ?? null)) {
-            return null;
-        }
-
-        $version = trim($decoded['version']);
-
-        return $this->isSemanticVersion($version) ? $version : null;
+        return $this->fromPackageJsonContents($contents);
     }
 
     private function isSemanticVersion(string $version): bool
