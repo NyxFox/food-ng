@@ -1,6 +1,6 @@
 {
   "name": "food-ng",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "private": true,
   "scripts": {
     "hooks:install": "git config core.hooksPath .githooks",

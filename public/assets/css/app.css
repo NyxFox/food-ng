@@ -186,6 +186,15 @@ textarea {
     font-weight: 700;
 }
 
+.site-brand__mark--default::before {
+    content: "";
+    width: 1.15rem;
+    height: 1.15rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, #ffffff 92%, transparent);
+    box-shadow: 0 0 0 0.28rem color-mix(in srgb, #ffffff 30%, transparent);
+}
+
 .site-brand__mark--image {
     background: color-mix(in srgb, var(--surface) 96%, transparent);
     border: 1px solid var(--border);

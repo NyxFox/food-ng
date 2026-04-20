@@ -7,7 +7,7 @@
                     <img class="site-brand__logo" src="<?= e($brandingIconUrl) ?>" alt="">
                 </span>
             <?php else: ?>
-                <span class="site-brand__mark">SP</span>
+                <span class="site-brand__mark site-brand__mark--default" aria-hidden="true"></span>
             <?php endif; ?>
             <span>
                 <strong><?= e($settings['site_title'] ?? 'Speiseplan') ?></strong>
