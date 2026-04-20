@@ -11,13 +11,23 @@ use RuntimeException;
 
 final class UserController extends BaseController
 {
+    private const PER_PAGE = 10;
+
     public function index(Request $request, array $params = []): void
     {
         $this->requireAdmin();
+        $page = max(1, (int) $request->query('page', 1));
+        $totalUsers = $this->users()->count();
+        $totalPages = max(1, (int) ceil($totalUsers / self::PER_PAGE));
+        $page = min($page, $totalPages);
 
         $this->render('admin/users/index', [
+            'currentPage' => $page,
             'pageTitle' => 'Benutzerverwaltung',
-            'users' => $this->users()->listAll(),
+            'perPage' => self::PER_PAGE,
+            'totalPages' => $totalPages,
+            'totalUsers' => $totalUsers,
+            'users' => $this->users()->listPage($page, self::PER_PAGE),
         ]);
     }
 
@@ -112,6 +122,7 @@ final class UserController extends BaseController
     {
         $actor = $this->requireAdmin();
         $this->requireValidCsrf();
+        $page = max(1, (int) $request->input('page', 1));
 
         try {
             $this->users()->toggleActive((int) ($params['id'] ?? 0), (int) $actor['id'], $request->ip());
@@ -120,7 +131,8 @@ final class UserController extends BaseController
             $this->flash()->error($exception->getMessage());
         }
 
-        $this->redirect('admin/users');
+        $path = $page > 1 ? 'admin/users?page=' . $page : 'admin/users';
+        $this->redirect($path);
     }
 
     private function findUserOrFail(int $id): array

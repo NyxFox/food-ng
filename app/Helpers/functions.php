@@ -47,6 +47,17 @@ function asset_url(string $path): string
     return url('assets/' . ltrim($path, '/'));
 }
 
+function url_with_query(string $path, array $query = []): string
+{
+    $base = url($path);
+
+    if ($query === []) {
+        return $base;
+    }
+
+    return $base . '?' . http_build_query($query);
+}
+
 function csrf_field(string $token): string
 {
     $fieldName = (string) app_config('security.csrf_field', '_csrf');

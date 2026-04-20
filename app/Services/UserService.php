@@ -19,6 +19,23 @@ final class UserService
         return $this->db->fetchAll('SELECT * FROM users ORDER BY is_active DESC, username ASC');
     }
 
+    public function listPage(int $page = 1, int $perPage = 10): array
+    {
+        $page = max(1, $page);
+        $perPage = max(1, $perPage);
+
+        return $this->db->fetchAll(
+            'SELECT *
+             FROM users
+             ORDER BY created_at DESC, id DESC
+             LIMIT :limit OFFSET :offset',
+            [
+                'limit' => $perPage,
+                'offset' => ($page - 1) * $perPage,
+            ]
+        );
+    }
+
     public function count(): int
     {
         return (int) $this->db->fetchValue('SELECT COUNT(*) FROM users');

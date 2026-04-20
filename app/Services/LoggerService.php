@@ -59,12 +59,57 @@ final class LoggerService
 
     public function latest(array $filters = [], int $limit = 200): array
     {
-        $sql = 'SELECT logs.*, users.username
-                FROM logs
-                LEFT JOIN users ON users.id = logs.user_id
-                WHERE 1 = 1';
         $parameters = [];
+        $sql = $this->applyFilters(
+            'SELECT logs.*, users.username
+             FROM logs
+             LEFT JOIN users ON users.id = logs.user_id
+             WHERE 1 = 1',
+            $filters,
+            $parameters
+        );
+        $sql .= ' ORDER BY logs.id DESC LIMIT :limit';
+        $parameters['limit'] = $limit;
 
+        return $this->db->fetchAll($sql, $parameters);
+    }
+
+    public function countMatching(array $filters = []): int
+    {
+        $parameters = [];
+        $sql = $this->applyFilters(
+            'SELECT COUNT(*)
+             FROM logs
+             WHERE 1 = 1',
+            $filters,
+            $parameters
+        );
+
+        return (int) $this->db->fetchValue($sql, $parameters);
+    }
+
+    public function page(array $filters = [], int $page = 1, int $perPage = 10): array
+    {
+        $page = max(1, $page);
+        $perPage = max(1, $perPage);
+        $parameters = [];
+        $sql = $this->applyFilters(
+            'SELECT logs.*, users.username
+             FROM logs
+             LEFT JOIN users ON users.id = logs.user_id
+             WHERE 1 = 1',
+            $filters,
+            $parameters
+        );
+        $sql .= ' ORDER BY logs.id DESC LIMIT :limit OFFSET :offset';
+        $parameters['limit'] = $perPage;
+        $parameters['offset'] = ($page - 1) * $perPage;
+
+        return $this->db->fetchAll($sql, $parameters);
+    }
+
+    private function applyFilters(string $sql, array $filters, array &$parameters): string
+    {
         if (!empty($filters['level'])) {
             $sql .= ' AND logs.level = :level';
             $parameters['level'] = (string) $filters['level'];
@@ -80,9 +125,6 @@ final class LoggerService
             $parameters['query'] = '%' . (string) $filters['query'] . '%';
         }
 
-        $sql .= ' ORDER BY logs.id DESC LIMIT :limit';
-        $parameters['limit'] = $limit;
-
-        return $this->db->fetchAll($sql, $parameters);
+        return $sql;
     }
 }
