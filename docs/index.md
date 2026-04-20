@@ -1,6 +1,6 @@
 # Dokumentation
 
-Food NG ist ein kleines, produktionsnahes CMS für Speisepläne. Die Anwendung bleibt bewusst schlank:
+Food-NG ist ein kleines, produktionsnahes CMS für Speisepläne.
 
 - kein schweres Framework
 - kein Composer-Zwang im Regelbetrieb

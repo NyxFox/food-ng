@@ -31,7 +31,7 @@ abstract class BaseController
             'oldInput' => $this->flash()->consumeOldInput(),
             'csrfToken' => $this->csrf()->token(),
             'currentPath' => $this->request()->uriPath(),
-            'pageTitle' => $data['pageTitle'] ?? app_config('app.name', 'Food NG'),
+            'pageTitle' => $data['pageTitle'] ?? app_config('app.name', 'Food-NG'),
             'appVersion' => app_config('app.version', '0.0.0'),
             'brandingIconUrl' => $this->branding()->iconUrl(),
             'brandingIconMime' => $this->branding()->iconMime(),

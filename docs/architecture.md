@@ -4,7 +4,7 @@ Zurück zum [Dokumentationsindex](./index.md).
 
 ## Grundaufbau
 
-Food NG nutzt eine einfache MVC-artige Struktur mit Front Controller:
+Food-NG nutzt eine einfache MVC-artige Struktur mit Front Controller:
 
 - [`public/index.php`](../public/index.php) ist der einzige Einstiegspunkt.
 - [`app/bootstrap.php`](../app/bootstrap.php) baut Konfiguration, Container und gemeinsame Services auf.

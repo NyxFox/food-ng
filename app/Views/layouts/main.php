@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= e($pageTitle) ?> | <?= e($settings['site_title'] ?? app_config('app.name', 'Food NG')) ?></title>
+    <title><?= e($pageTitle) ?> | <?= e($settings['site_title'] ?? app_config('app.name', 'Food-NG')) ?></title>
     <meta name="color-scheme" content="light dark">
     <?php if ($brandingIconUrl !== null): ?>
         <link rel="icon" href="<?= e($brandingIconUrl) ?>" type="<?= e($brandingIconMime ?? 'image/png') ?>">

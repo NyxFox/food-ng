@@ -1,4 +1,4 @@
-# Food NG
+# Food-NG
 
 Schlankes Mini-CMS für Speisepläne auf Basis von PHP, SQLite, Vanilla JS und `pdf.js`.
 
